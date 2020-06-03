@@ -19,14 +19,14 @@ glove_vec_size = 300
 hidden_size = 128
 
 DELTA = 0.00000000001	# to avoid 0 in log
-weight_decay = 0.005	# L2 regularization term
+weight_decay = 0.0025	# L2 regularization term
 max_plen = 128			# Max passage length
 max_qlen = 32			# Max query length
 num_para = 10			# Number of passages
 lambda_de = 0.5			# multiplicative factor for Document Extraction loss
 thres = 0.9				# threshold for Rouge-L
 
-lr = 0.00025			# learning rate
+lr = 0.0003				# learning rate
 
 
 def predict():
@@ -105,7 +105,7 @@ def predict():
 
 
 
-dev_data = load_data('outputs/dev_data.json', thres, max_plen)[0:25000]
+dev_data = load_data('preprocessed_data/dev_data.json', thres, max_plen)[0:25000]
 
 print('Done loading dev data.')
 

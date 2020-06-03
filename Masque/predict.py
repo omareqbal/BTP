@@ -108,7 +108,7 @@ def predict():
 				ans_words_tmp = []
 				ans_words.append(ans_words_tmp)
 
-			e_ans, ch_ans, aseq_len = get_ans_embeddings(ans_words, batch_size)
+			e_ans, ch_ans, aseq_len, ans_mask = get_ans_embeddings(ans_words, batch_size)
 
 
 			for t in range(1, max_ans_len):
@@ -119,12 +119,12 @@ def predict():
 				P_y = model.module.ans_decoder(e_ans, ch_ans, aseq_len, M_q, q_mask, M_p_k, p_mask, beta_p, q_words_idx, p_words_idx)
 				# shape of P_y - [batch_size, ans_len, ext_vocab_size]
 
-				ans_word_idx = torch.argmax(P_y, dim=2)	# select the word index with maximum probability
+				_, ans_word_idx = torch.topk(P_y, k=10, dim=2)	# select top-10 words
 
 				complete = True
 				completed = [False for _ in range(batch_size)]
 				for i in range(batch_size):
-					word_idx = int(ans_word_idx[i][len(ans_words[i])+1])
+					word_idx = int(ans_word_idx[i][t][np.random.randint(0,10)])
 					if(word_idx < common_vocab_size):
 						word = idx2word[word_idx]
 					else:
@@ -141,7 +141,7 @@ def predict():
 				if(complete or t == max_ans_len-1):
 					break
 
-				e_ans, ch_ans, aseq_len = get_ans_embeddings(ans_words, batch_size)
+				e_ans, ch_ans, aseq_len, ans_mask = get_ans_embeddings(ans_words, batch_size)
 
 			for i in range(batch_size):
 				if(prob_ans[i] < ans_pos_thres):

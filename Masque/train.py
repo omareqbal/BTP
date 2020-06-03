@@ -51,7 +51,7 @@ min_lr = 0
 max_lr = 0.0002
 lr_inc_steps = 5000
 lr_multiply = (max_lr - min_lr)/lr_inc_steps
-lr = 0.0001
+lr = min_lr
 T_max = 75000
 
 n_epochs = 50

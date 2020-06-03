@@ -13,7 +13,7 @@ def load_data(input_file, thres, max_plen):
 	data = []
 
 	for row in tqdm(data_):				
-		if(row['max_score'] > thres and row['end'] < max_plen):
+		if(row['max_score'] > thres and row['end'] < max_plen-2):
 			data.append(row)
 
 	return data
@@ -68,8 +68,8 @@ class Dataset(utils.data.Dataset):
 		p_labels = torch.Tensor(p_labels)
 		qseq_len = min(self.max_qlen, len(q_words)+2)
 
-		start = torch.tensor([row['start']])
-		end = torch.tensor([row['end']])
+		start = torch.tensor([row['start']+1])
+		end = torch.tensor([row['end']+1])
 		selected = torch.tensor([row['selected']])
 
 
