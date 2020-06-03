@@ -8,6 +8,7 @@ from torch.nn.utils import clip_grad_norm_
 from data_utils import Dataset, load_data, load_glove_model, load_emb_matrix
 import os
 import json
+import numpy as np
 
 
 data_dir = '../data'
