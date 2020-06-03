@@ -174,7 +174,7 @@ args = parser.parse_args()
 
 data_dir = '../data'
 
-data = load_data(data_dir + '/msmarco/' + args.data + '_dev_v2.1.json')
+data = load_data(data_dir + '/msmarco/' + args.data + '_v2.1.json')
 
 print('Done Loading data.')
 
